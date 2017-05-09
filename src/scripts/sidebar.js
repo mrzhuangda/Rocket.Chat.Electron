@@ -37,14 +37,19 @@ class SideBar extends EventEmitter {
         });
 
         webview.on('dom-ready', (hostUrl) => {
-            this.setImage(hostUrl);
+            /*this.setImage(hostUrl);*/
             if (this.isHidden()) {
                 this.hide();
             } else {
                 this.show();
             }
+
+
         });
 
+        webview.on('did-finish-load',() => {
+            alert('dada')
+        })
     }
 
     add (host) {
@@ -83,7 +88,7 @@ class SideBar extends EventEmitter {
         item.appendChild(tooltip);
         item.appendChild(badge);
         item.appendChild(img);
-        item.appendChild(hotkey);
+        // item.appendChild(hotkey);
 
         item.dataset.host = host.url;
         item.setAttribute('server', host.url);
@@ -192,20 +197,12 @@ class SideBar extends EventEmitter {
         document.body.classList.add('hide-server-list');
         localStorage.setItem('sidebar-closed', 'true');
         this.emit('hide');
-        if (process.platform === 'darwin') {
-            document.querySelectorAll('webview').forEach(
-              (webviewObj) => { if (webviewObj.insertCSS) { webviewObj.insertCSS('aside.side-nav{margin-top:15px;overflow:hidden; transition: margin .5s ease-in-out; }'); } });
-        }
     }
 
     show () {
         document.body.classList.remove('hide-server-list');
         localStorage.setItem('sidebar-closed', 'false');
         this.emit('show');
-        if (process.platform === 'darwin') {
-            document.querySelectorAll('webview').forEach(
-                (webviewObj) => { if (webviewObj.insertCSS) { webviewObj.insertCSS('aside.side-nav{margin-top:0; overflow:hidden; transition: margin .5s ease-in-out; }'); } });
-        }
     }
 
     toggle () {

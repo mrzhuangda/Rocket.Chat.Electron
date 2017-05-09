@@ -278,7 +278,7 @@ input[type='password'] {
 	top: 0;
 	right: 0;
 	bottom: 0;
-	left: 80px;
+	left: 0;
 	overflow-y: auto;
 	text-align: center;
 	background-color: darken(@primary-background-color, 10%);
@@ -291,7 +291,6 @@ input[type='password'] {
 		padding: 45px 0 35px;
 		z-index: 10;
 		position: relative;
-		-webkit-app-region: no-drag;
 	}
 	.share {
 		border-radius: 50%;
@@ -309,35 +308,5 @@ input[type='password'] {
 .hide-server-list {
 	.landing-page {
 		left: 0;
-	}
-
-	.drag-region.left-nav {
-		left: 0;
-	}
-}
-
-.drag-region {
-	position: absolute;
-	-webkit-app-region: drag;
-
-	&.left-nav {
-		@media(max-width: 860px) {
-			width: 20px;
-		}
-
-		width: 260px;
-		height: 100%;
-		left: 80px;
-	}
-
-	&.right-nav {
-		width: 40px;
-		height: 100%;
-		right: 0;
-	}
-
-	&.top-bar {
-		height: 20px;
-		width: 100%;
 	}
 }

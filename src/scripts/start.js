@@ -159,7 +159,6 @@ export var start = function () {
 
     $('.add-server').on('click', function () {
         servers.clearActive();
-        webview.showLanding();
     });
 
     servers.restoreActive();

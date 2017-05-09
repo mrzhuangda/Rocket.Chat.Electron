@@ -5,7 +5,7 @@
 
 import path from 'path';
 import url from 'url';
-import { app, Menu } from 'electron';
+import { app, Menu, globalShortcut } from 'electron';
 import { devMenuTemplate } from './menu/dev_menu_template';
 import { editMenuTemplate } from './menu/edit_menu_template';
 import createWindow from './helpers/window';
@@ -40,7 +40,6 @@ app.on('ready', function () {
 
     var mainWindow = createWindow('main', {
         width: 1000,
-        titleBarStyle: 'hidden',
         height: 600
     });
 
@@ -55,6 +54,10 @@ app.on('ready', function () {
     if (env.name === 'development') {
         mainWindow.openDevTools();
     }
+
+    globalShortcut.register('Control+Alt+Z', function () {
+            mainWindow.show();
+        })
 });
 
 app.on('window-all-closed', function () {

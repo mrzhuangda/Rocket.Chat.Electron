@@ -88,7 +88,9 @@ function createAppTray () {
 }
 
 function setImage (title) {
+
     if (title === '•') {
+
         title = "Dot";
     } else if (!isNaN(parseInt(title)) && title > 9) {
         title = "9Plus";

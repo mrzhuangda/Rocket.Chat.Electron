@@ -1,5 +1,4 @@
 import { remote } from 'electron';
-import webview from '../webview';
 import servers from '../servers';
 const isMac = process.platform === 'darwin';
 
@@ -29,7 +28,6 @@ const macWindowTemplate = [
             var mainWindow = remote.getCurrentWindow();
             mainWindow.show();
             servers.clearActive();
-            webview.showLanding();
         }
     },
     {
@@ -55,7 +53,6 @@ const windowTemplate = [
         accelerator: 'Ctrl+N',
         click: function () {
             servers.clearActive();
-            webview.showLanding();
         }
     },
     {

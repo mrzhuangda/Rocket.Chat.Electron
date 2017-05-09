@@ -3,61 +3,59 @@ import { remote } from 'electron';
 const APP_NAME = remote.app.getName();
 const isMac = process.platform === 'darwin';
 
-const appTemplate = [
+const macAppTemplate = [
     {
         label: 'About ' + APP_NAME,
-        click: function () {
-            const win = new remote.BrowserWindow({
-                width: 310,
-                height: 240,
-                resizable: false,
-                show: false,
-                center: true,
-                maximizable: false,
-                minimizable: false,
-                title: 'About Rocket.Chat'
-            });
-            win.loadURL('file://' + __dirname + '/about.html');
-            win.setMenuBarVisibility(false);
-            win.openDevTools();
-            win.show();
-        }
+        role: 'about'
     },
     {
-        type: 'separator',
-        id: 'about-sep'
+        type: 'separator'
     },
     {
-        label: `Quit ${APP_NAME}`,
-        accelerator: 'CommandOrControl+Q',
+        label: 'Hide ' + APP_NAME,
+        accelerator: 'Command+H',
+        role: 'hide'
+    },
+    {
+        label: 'Hide Others',
+        accelerator: 'Command+Alt+H',
+        role: 'hideothers'
+    },
+    {
+        label: 'Show All',
+        role: 'unhide'
+    },
+    {
+        type: 'separator'
+    },
+    {
+        label: 'Quit ' + APP_NAME,
+        accelerator: 'Command+Q',
         click: function () {
             remote.app.quit();
         }
     }
 ];
 
-if (isMac) {
-    const macAppExtraTemplate = [
-        {
-            label: 'Hide ' + APP_NAME,
-            accelerator: 'Command+H',
-            role: 'hide',
-            position: 'after=about-sep'
-        },
-        {
-            label: 'Hide Others',
-            accelerator: 'Command+Alt+H',
-            role: 'hideothers'
-        },
-        {
-            label: 'Show All',
-            role: 'unhide'
-        },
-        {
-            type: 'separator'
+const appTemplate = [
+    {
+        label: 'About ' + APP_NAME,
+        click: function () {
+            const win = new remote.BrowserWindow({ width: 310, height: 200, minWidth: 310, minHeight: 200, maxWidth: 310, maxHeight: 200, show: false, maximizable: false, minimizable: false, title: ' ' });
+            win.loadURL('file://' + __dirname + '/about.html');
+            win.show();
         }
-    ];
-    appTemplate.push(...macAppExtraTemplate);
-}
+    },
+    {
+        type: 'separator'
+    },
+    {
+        label: 'Quit',
+        accelerator: 'Ctrl+Q',
+        click: function () {
+            remote.app.quit();
+        }
+    }
+];
 
-export default appTemplate;
+export default isMac ? macAppTemplate : appTemplate;

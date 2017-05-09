@@ -26,14 +26,16 @@ body.offline .only-offline {
 
 div.server-list {
 	position: fixed;
-	top: 0;
-	bottom: 0;
-	height: 100%;
-	width: 80px;
-	padding-top: 22px;
-	background-color: #0F354C;
-	z-index: 100000;
-	-webkit-app-region: drag;
+/* 	top: 0; */
+	bottom: 7px;
+	height: 60px;
+	left:190px;
+	opacity:0;
+	/* width: 80px; */
+	padding-top: 5px;
+	/* background-color: #0F354C; */
+	z-index: 10;
+	/* display:none; */
 }
 
 div.server-list ul {
@@ -79,7 +81,7 @@ div.server-list li {
 	margin-bottom: 20px;
 }
 
-div.server-list li:before {
+/* div.server-list li:before {
 	content: "";
 	width: 0px;
 	height: 0px;
@@ -87,7 +89,7 @@ div.server-list li:before {
 	transition: height .2s, opacity .2s;
 	border-radius: 0 3px 3px 0;
 	opacity: 1;
-}
+} */
 
 .server-list img {
 	width: 50px;
@@ -98,6 +100,7 @@ div.server-list li:before {
 	display: none;
 	opacity: 0.6;
 	transition: opacity .2s;
+
 }
 
 .server-list span {
@@ -105,9 +108,9 @@ div.server-list li:before {
 	text-align: center;
 	line-height: 60px;
 	left: 5px;
-	position: absolute;
 	opacity: 0.6;
 	transition: opacity .2s;
+
 }
 
 .server-list li .tooltip {
@@ -176,7 +179,6 @@ div.server-list li:before {
 
 .hide-server-list webview {
 	left: 0;
-	transition: left 0.5s ease-in-out;
 }
 
 @-webkit-keyframes wrong {
@@ -229,8 +231,8 @@ webview {
 	z-index: 0;
 	position: fixed;
 	top: 0;
-	left: 80px;
-	right: 0;
+	left: 0;
+	right: -6px;
 	bottom: 0;
 }
 
@@ -240,9 +242,4 @@ webview.active {
 
 .landing-page {
 	z-index: 1;
-	-webkit-app-region: drag;
-
-	&.hide {
-		display: none;
-	}
 }

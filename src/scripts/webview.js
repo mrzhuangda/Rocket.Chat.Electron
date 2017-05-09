@@ -1,7 +1,8 @@
 import { EventEmitter } from 'events';
 import servers from './servers';
 import sidebar from './sidebar';
-import { desktopCapturer, ipcRenderer } from 'electron';
+import { shell, desktopCapturer, ipcRenderer } from 'electron';
+const $ = require('./vendor/jquery-3.1.1');
 
 class WebView extends EventEmitter {
     constructor () {
@@ -44,15 +45,12 @@ class WebView extends EventEmitter {
     }
 
     loaded () {
-        document.querySelector('#loading').style.display = 'none';
-        document.querySelector('#login-card').style.display = 'block';
-        document.querySelector('footer').style.display = 'block';
-    }
-
-    loading () {
-        document.querySelector('#loading').style.display = 'block';
-        document.querySelector('#login-card').style.display = 'none';
-        document.querySelector('footer').style.display = 'none';
+        var loading = document.querySelector('#loading');
+        var form = document.querySelector('#login-card');
+        var footer = document.querySelector('footer');
+        loading.style.display = 'none';
+        form.style.display = 'block';
+        footer.style.display = 'block';
     }
 
     add (host) {
@@ -101,29 +99,13 @@ class WebView extends EventEmitter {
                         ipcRenderer.send('screenshare', sources);
                     });
                     break;
-                case 'reload-server':
-                    const active = this.getActive();
-                    const server = active.getAttribute('server');
-                    this.loading();
-                    active.loadURL(server);
-                    break;
             }
         });
 
         webviewObj.addEventListener('dom-ready', () => {
             this.emit('dom-ready', host.url);
-        });
-
-        webviewObj.addEventListener('did-fail-load', (e) => {
-            if (e.isMainFrame) {
-                webviewObj.loadURL('file://' + __dirname + '/loading-error.html');
-            }
-        });
-
-        webviewObj.addEventListener('did-get-response-details', (e) => {
-            if (e.resourceType === 'mainFrame' && e.httpResponseCode >= 500) {
-                webviewObj.loadURL('file://' + __dirname + '/loading-error.html');
-            }
+            this.loaded(host);
+            // webviewObj.openDevTools();
         });
 
         this.webviewParentElement.appendChild(webviewObj);
@@ -149,7 +131,7 @@ class WebView extends EventEmitter {
     }
 
     getActive () {
-        return document.querySelector('webview.active');
+                return document.querySelector('webview.active');
     }
 
     isActive (hostUrl) {
@@ -161,12 +143,6 @@ class WebView extends EventEmitter {
         while (!(item = this.getActive()) === false) {
             item.classList.remove('active');
         }
-        document.querySelector('.landing-page').classList.add('hide');
-    }
-
-    showLanding () {
-        this.loaded();
-        document.querySelector('.landing-page').classList.remove('hide');
     }
 
     setActive (hostUrl) {

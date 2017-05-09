@@ -49,7 +49,7 @@ if (isMac) {
 
 function createMenu () {
     const menu = Menu.buildFromTemplate(menuTemplate);
-    Menu.setApplicationMenu(menu);
+    Menu.setApplicationMenu(null);
 }
 
 function addServer (host, position) {
